@@ -112,24 +112,28 @@ function Hash (hash, xs) {
         size : function () { return self.length }
     };
     
-    if (self.__defineGetter__) {
+    if (Object.defineProperty) {
+        // es5-shim has an Object.defineProperty but it throws for getters
+        try {
+            for (var key in props) {
+                Object.defineProperty(self, key, { get : props[key] });
+            }
+        }
+        catch (err) {
+            for (var key in props) {
+                self[key] = props[key]();
+            }
+        }
+    }
+    else if (self.__defineGetter__) {
         for (var key in props) {
             self.__defineGetter__(key, props[key]);
         }
     }
-    // 
-    // with browserify there will be a `Object.defineProperty`
-    // but still no getters & setters
-    //
-    // else if (Object.defineProperty) {
-    //     for (var key in props) {
-    //         Object.defineProperty(self, key, { get : props[key] });
-    //     }
-    // }
     else {
         // non-lazy version for browsers that suck >_<
         for (var key in props) {
-            self[key] = { get : function () { return props[key] } };
+            self[key] = props[key]();
         }
     }
     
