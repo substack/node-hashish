@@ -1,6 +1,6 @@
 {
     "name" : "hashish",
-    "version" : "0.0.2",
+    "version" : "0.0.3",
     "description" : "Hash data structure manipulation functions",
     "main" : "./index.js",
     "repository" : {

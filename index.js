@@ -121,7 +121,11 @@ function Hash (hash, xs) {
         }
         catch (err) {
             for (var key in props) {
-                self[key] = props[key]();
+                if (key !== 'clone' && key !== 'copy' && key !== 'compact') {
+                    // ^ those keys use Hash() so can't call them without
+                    // a stack overflow
+                    self[key] = props[key]();
+                }
             }
         }
     }
