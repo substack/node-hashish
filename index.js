@@ -58,14 +58,26 @@ function Hash (hash, xs) {
             }
             return false;
         },
-        update : function (h) {
-            Object.keys(h).forEach(function (key) {
-                hash[key] = h[key];
-            });
+        update : function (/* a, b, c, ... */) {
+            for (var i = 0; i < arguments.length; i++) {
+              var h = arguments[i];
+              if (!h) {
+                continue;
+              }
+
+              Object.keys(h).forEach(function (key) {
+                  hash[key] = h[key];
+              });
+            }
             return self;
         },
-        merge : function (h) {
-            return self.copy.update(h);
+        merge : function (/* a, b, c, ... */) {
+            var copy = self.copy;
+            for (var i = 0; i < arguments.length; i++) {
+              var h = arguments[i];
+              copy.update(h);
+            }
+            return copy;
         },
         has : function (key) { // only operates on enumerables
             return Array.isArray(key)
@@ -182,12 +194,16 @@ Hash.some = function (ref, f) {
     return Hash(ref).some(f);
 };
 
-Hash.update = function (a, b) {
-    return Hash(a).update(b).items;
+Hash.update = function (a /*, b, c, ... */) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    var hash = Hash(a);
+    return hash.update.apply(hash, args).items;
 };
 
-Hash.merge = function (a, b) {
-    return Hash(a).merge(b).items;
+Hash.merge = function (a /*, b, c, ... */) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    var hash = Hash(a);
+    return hash.merge.apply(hash, args).items;
 };
 
 Hash.has = function (ref, key) {

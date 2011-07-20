@@ -105,6 +105,10 @@ exports.update = function () {
     var hash = Hash.update(ref, { c : 3, a : 0 });
     assert.deepEqual(ref, hash);
     assert.deepEqual(hash, { a : 0, b : 2, c : 3 });
+
+    var ref2 = {a: 1};
+    var hash2 = Hash.update(ref2, { b: 2, c: 3 }, undefined, { d: 4 });
+    assert.deepEqual(ref2, { a: 1, b: 2, c: 3, d: 4 });
 };
 
 exports.merge = function () {
@@ -115,6 +119,10 @@ exports.merge = function () {
     assert.deepEqual(ref, { a : 1, b : 2 });
     assert.deepEqual(items, { a : 1, b : 3, c : 3.14 });
     assert.deepEqual(hash, { a : 1, b : 3, c : 3.14 });
+
+    var ref2 = { a : 1 };
+    var hash2 = Hash.merge(ref, { b: 2, c: 3 }, undefined, { d: 4 });
+    assert.deepEqual(hash2, { a: 1, b: 2, c: 3, d: 4 });
 };
 
 exports.has = function () {
