@@ -82,17 +82,18 @@ some(cb)
 Returns a boolean: whether or not `cb(value, key)` ever returned a non-falsy
 value.
 
-update(obj)
+update(obj1, [obj2, obj3, ...])
 -----------
 
-Mutate the context hash, merging the key/value pairs from `obj` and overwriting
-keys from the context hash if `obj` has keys of the same name.
+Mutate the context hash, merging the key/value pairs from the passed objects
+and overwriting keys from the context hash if the current `obj` has keys of
+the same name. Falsy arguments are silently ignored.
 
-merge(obj)
+merge(obj1, [obj2, obj3, ...])
 ----------
 
-Merge the key/value pairs from `obj` into the resultant hash without modifying
-the context hash.
+Merge the key/value pairs from the passed objects into the resultant hash
+without modifying the context hash. Falsy arguments are silently ignored.
 
 has(key)
 --------
