@@ -58,26 +58,33 @@ function Hash (hash, xs) {
             }
             return false;
         },
-        update : function (/* a, b, c, ... */) {
-            for (var i = 0; i < arguments.length; i++) {
-              var h = arguments[i];
-              if (!h) {
-                continue;
-              }
-
-              Object.keys(h).forEach(function (key) {
-                  hash[key] = h[key];
-              });
+        update : function (obj) {
+            if (arguments.length > 1) {
+                self.updateAll([].slice.call(arguments));
+            }
+            else {
+                Object.keys(obj).forEach(function (key) {
+                    hash[key] = obj[key];
+                });
             }
             return self;
         },
-        merge : function (/* a, b, c, ... */) {
-            var copy = self.copy;
-            for (var i = 0; i < arguments.length; i++) {
-              var h = arguments[i];
-              copy.update(h);
+        updateAll : function (xs) {
+            xs.filter(Boolean).forEach(function (x) {
+                self.update(x);
+            });
+            return self;
+        },
+        merge : function (obj) {
+            if (arguments.length > 1) {
+                return self.copy.updateAll([].slice.call(arguments));
             }
-            return copy;
+            else {
+                return self.copy.update(obj);
+            }
+        },
+        mergeAll : function (xs) {
+            return self.copy.updateAll(xs);
         },
         has : function (key) { // only operates on enumerables
             return Array.isArray(key)
