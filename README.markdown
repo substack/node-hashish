@@ -89,11 +89,21 @@ Mutate the context hash, merging the key/value pairs from the passed objects
 and overwriting keys from the context hash if the current `obj` has keys of
 the same name. Falsy arguments are silently ignored.
 
+updateAll([ obj1, obj2, ... ])
+------------------------------
+
+Like multi-argument `update()` but operate on an array directly.
+
 merge(obj1, [obj2, obj3, ...])
 ----------
 
 Merge the key/value pairs from the passed objects into the resultant hash
 without modifying the context hash. Falsy arguments are silently ignored.
+
+mergeAll([ obj1, obj2, ... ])
+------------------------------
+
+Like multi-argument `merge()` but operate on an array directly.
 
 has(key)
 --------
