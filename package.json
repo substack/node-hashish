@@ -28,6 +28,6 @@
     "scripts" : {
         "test" : "expresso"
     },
-    "license" : "MIT/X11",
+    "license" : "MIT",
     "engine" : ["node >=0.2.0"]
 }
